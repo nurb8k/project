@@ -250,7 +250,28 @@
                             />
                         </div>
                     </div>
+                    <ul class="navbar-nav flex-row align-items-center ms-auto">
+                        <!-- Place this tag where you want the button to render. -->
+                        <!-- User -->
+                        <li class="nav-item navbar-dropdown dropdown-user dropdown">
+                            <a class="nav-link dropdown-toggle hide-arrow" href="javascript:void(0);" data-bs-toggle="dropdown">
+                                <div class="avatar avatar-online">
+                                    <img src="{{asset('assets/img/avatars/1.png')}}" alt class="w-px-40 h-auto rounded-circle" />
+                                </div>
+                            </a>
+                            <ul class="dropdown-menu dropdown-menu-end">
+                                <li>
+                                    {{config('app.languages')[app()->getLocale()]}}</li>
+                                @foreach(config('app.languages') as $ln => $lang)
+                                    <a href="{{route('set.locale',$ln)}}">
+                                        {{$lang}}
+                                    </a>
+                                @endforeach
+                            </ul>
+                        </li>
+                    </ul>
                     <!-- /Search -->
+                   {{__('auth.pagination')}}
 
                     <ul class="navbar-nav flex-row align-items-center ms-auto">
                         <!-- Place this tag where you want the button to render. -->

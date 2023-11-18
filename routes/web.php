@@ -1,5 +1,7 @@
 <?php
 
+use Illuminate\Http\Request;
+use Illuminate\Support\Facades\App;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -12,7 +14,10 @@ use Illuminate\Support\Facades\Route;
 | be assigned to the "web" middleware group. Make something great!
 |
 */
-
+Route::get('/set/locale/{lang}', function (Request $request, $lang){
+        $request->session()->put('localization',$lang);
+        return redirect()->back();
+})->name('set.locale');
 Route::get('/', function () {
     return view('layouts.web');
 });

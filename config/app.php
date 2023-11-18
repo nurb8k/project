@@ -97,7 +97,11 @@ return [
     */
 
     'fallback_locale' => 'en',
-
+    'languages' => [
+        'kz' => 'Kazakh',
+        'ru' => 'Russian',
+        'en' => 'English',
+    ],
     /*
     |--------------------------------------------------------------------------
     | Faker Locale
