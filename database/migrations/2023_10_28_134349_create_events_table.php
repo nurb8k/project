@@ -13,19 +13,16 @@ return new class extends Migration {
         Schema::create('events', function (Blueprint $table) {
             $table->id();
             $table->string('title');
-            $table->text('description');
-            $table->text('short_description');
-            $table->foreignId('status_id')
-                ->nullable()
-                ->constrained('event_statuses')
-                ->nullOnDelete();
-            $table->foreignId('priority_id')
-                ->nullable()
-                ->constrained('event_priorities')
-                ->nullOnDelete();
-            $table->foreignId('user_id')->constrained('users');
-            $table->integer('capacity')->nullable();
+            $table->text('description')->nullable()->comment("Описание о ивенте");
+            $table->text('short_description')->nullable()->comment("короткий описание о ивенте");
+            $table->text('comment')->nullable()->comment('Комментарии');
+            $table->unsignedInteger('status')->default(0)->comment('status znachenie');
+            $table->foreignId('priority')->default(0)->comment('приоритет айди');
+            $table->foreignId('user_id')->comment('создатель')->constrained('users');
+            $table->unsignedInteger('capacity')->nullable()->comment('вместимость людей');
+            $table->timestamp('end_time')->comment('оканчание');
             $table->timestamps();
+
         });
     }
 

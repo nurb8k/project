@@ -14,8 +14,9 @@ return new class extends Migration {
             $table->id();
             $table->string('surname');
             $table->string('name');
-            $table->string('email')->unique();
-            $table->string('phone')->nullable();
+            $table->string('username')->unique()->nullable();
+            $table->string('email')->unique()->nullable();
+            $table->string('phone')->unique()->nullable();
             $table->string('password');
             $table->enum('gender', ['Female', 'Male', 'Unknown'])->nullable();
             $table->boolean('is_online')->nullable();

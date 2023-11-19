@@ -11,10 +11,13 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('event_statuses', function (Blueprint $table) {
+        Schema::create('priorities', function (Blueprint $table) {
             $table->id();
-            $table->string('name');
-            $table->timestamp('duration');
+            $table->string("model_type")->comment("тип модел");
+            $table->unsignedBigInteger("model_id")->comment("ID модел");
+            $table->unsignedTinyInteger('level')->default(0);
+            $table->json('name')->nullable();
+            $table->timestamp('duration')->nullable();
             $table->timestamps();
         });
     }
@@ -24,6 +27,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('event_statuses');
+        Schema::dropIfExists('priorities');
     }
 };

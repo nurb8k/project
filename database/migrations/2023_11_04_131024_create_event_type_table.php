@@ -13,8 +13,8 @@ return new class extends Migration
     {
         Schema::create('events_types', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('event_id')->nullable()->constrained('events');
-            $table->foreignId('type_id')->nullable()->constrained('types');
+            $table->foreignId('event_id')->constrained('events');
+            $table->foreignId('type_id')->constrained('types');
             $table->timestamps();
         });
     }

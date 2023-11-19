@@ -24,3 +24,6 @@ Route::get('/', function () {
     return view('layouts.web');
 });
 
+Route::get('/test', function (){
+   dd(json_decode('{"kz":"tırkeluge aşyq","ru":"открыто для входа"}'));
+})->name('set.locale');

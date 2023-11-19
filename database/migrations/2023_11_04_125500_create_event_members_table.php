@@ -18,6 +18,7 @@ return new class extends Migration
                 ->constrained('events')
                 ->nullOnDelete();
             $table->foreignId('user_id')->constrained('users');
+            $table->unsignedTinyInteger('role')->default(0)->comment("роль участника");
             $table->timestamps();
         });
     }
