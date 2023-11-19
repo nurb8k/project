@@ -18,6 +18,9 @@ Route::get('/set/locale/{lang}', function (Request $request, $lang){
         $request->session()->put('localization',$lang);
         return redirect()->back();
 })->name('set.locale');
+
+
 Route::get('/', function () {
     return view('layouts.web');
 });
+
