@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\Auth\RegisterController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\App;
 use Illuminate\Support\Facades\Route;
@@ -19,6 +20,13 @@ Route::get('/set/locale/{lang}', function (Request $request, $lang){
         $request->session()->put('localization',$lang);
         return redirect()->back();
 })->name('set.locale');
+
+Route::middleware('guest')->group(function () {
+    Route::get('/register', [RegisterController::class, 'index'])->name('register');
+    Route::post('/register', [RegisterController::class, 'store'])->name('register.post');
+
+});
+
 
 
 Route::get('/', [HomeController::class, 'index'])->name('home');

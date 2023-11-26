@@ -1,6 +1,5 @@
 
 @extends('layouts.web')
-
 @section('web_content')
 
     <div class="container p-4">

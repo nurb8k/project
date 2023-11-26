@@ -134,12 +134,12 @@
                 <li class="menu-item">
                     <a href="javascript:void(0);" class="menu-link menu-toggle">
                         <i class="menu-icon tf-icons bx bx-dock-top"></i>
-                        <div data-i18n="Account Settings">Account Settings</div>
+                        <div data-i18n="Account Settings">Account</div>
                     </a>
                     <ul class="menu-sub">
                         <li class="menu-item">
-                            <a href="pages-account-settings-account.html" class="menu-link">
-                                <div data-i18n="Account">Account</div>
+                            <a href="{{route('register')}}" class="menu-link">
+                                <div data-i18n="Account">Register</div>
                             </a>
                         </li>
                         <li class="menu-item">
@@ -349,8 +349,8 @@
 
                         <div class="col-12 col-lg-12 order-2 order-md-3 order-lg-2 mb-4">
                             <div class="card">
-                                <div class="row row-bordered g-0">
-                            {{--   yield --content       --}}
+                                <div class="row row-bordered g-0 p-4">
+
                                     @yield('web_content')
 
                                 </div>
