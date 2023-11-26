@@ -4,13 +4,14 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
-use Illuminate\Support\Facades\App;
-
+use Spatie\Translatable\HasTranslations;
 
 class Status extends Model
 {
-    use HasFactory;
+    use HasFactory, HasTranslations;
 
+
+    public $translatable = ['name'];
 
     protected $fillable =[
         'model_type',
@@ -19,19 +20,10 @@ class Status extends Model
         'category'
     ];
 
-    public function getNameAttribute($value){
-        return json_decode($value);
-    }
-
 
 //    public function eventStatuses(){
 //
 //    }
 
-   public function getLocalizedNameAttribute(){
-       $locale = App::getLocale();
-         return $this->name->$locale;
-
-   }
 
 }

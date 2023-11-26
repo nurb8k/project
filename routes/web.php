@@ -4,6 +4,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\App;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Web\HomeController;
+use App\Http\Controllers\Web\EventController;
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -22,3 +23,8 @@ Route::get('/set/locale/{lang}', function (Request $request, $lang){
 
 Route::get('/', [HomeController::class, 'index'])->name('home');
 
+Route::get('/events', [EventController::class, 'index'])->name('events.index');
+
+Route::get('/events/create', [EventController::class, 'create'])->name('events.create');
+
+Route::post('/events', [EventController::class, 'store'])->name('events.store');

@@ -19,11 +19,11 @@ class Event extends Model
         'priority_id',
         'user_id',
         'capacity',
-        'status_id',
+        'status',
     ];
 //    protected $casts = [];
     public function getStatusObject(): BelongsTo
     {
-        return $this->belongsTo(Status::class, 'status_id', 'model_status_id')->where('statuses.model_type', self::class);
+        return $this->belongsTo(Status::class, 'status', 'model_status_id')->where('statuses.model_type', self::class);
     }
 }

@@ -1,4 +1,3 @@
-
 @extends('layouts.web')
 
 @section('web_content')
