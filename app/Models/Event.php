@@ -22,7 +22,7 @@ class Event extends Model
         'status_id',
     ];
 //    protected $casts = [];
-    public function status(): BelongsTo
+    public function getStatusObject(): BelongsTo
     {
         return $this->belongsTo(Status::class, 'status_id', 'model_status_id')->where('statuses.model_type', self::class);
     }

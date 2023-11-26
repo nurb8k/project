@@ -3,7 +3,7 @@
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\App;
 use Illuminate\Support\Facades\Route;
-
+use App\Http\Controllers\Web\HomeController;
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -20,10 +20,5 @@ Route::get('/set/locale/{lang}', function (Request $request, $lang){
 })->name('set.locale');
 
 
-Route::get('/', function () {
-    return view('layouts.web');
-});
+Route::get('/', [HomeController::class, 'index'])->name('home');
 
-Route::get('/test', function (){
-   dd(json_decode('{"kz":"tırkeluge aşyq","ru":"открыто для входа"}'));
-})->name('set.locale');

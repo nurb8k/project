@@ -351,6 +351,8 @@
                             <div class="card">
                                 <div class="row row-bordered g-0" style="height: 500px">
                             {{--   yield --content       --}}
+                                    @yield('web_content')
+
                                 </div>
                             </div>
                         </div>

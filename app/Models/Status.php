@@ -4,6 +4,8 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Facades\App;
+
 
 class Status extends Model
 {
@@ -17,10 +19,19 @@ class Status extends Model
         'category'
     ];
 
+    public function getNameAttribute($value){
+        return json_decode($value);
+    }
+
 
 //    public function eventStatuses(){
 //
 //    }
 
+   public function getLocalizedNameAttribute(){
+       $locale = App::getLocale();
+         return $this->name->$locale;
+
+   }
 
 }
