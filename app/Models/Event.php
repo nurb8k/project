@@ -26,4 +26,9 @@ class Event extends Model
     {
         return $this->belongsTo(Status::class, 'status', 'model_status_id')->where('statuses.model_type', self::class);
     }
+
+    public function author(): BelongsTo
+    {
+        return $this->belongsTo(User::class);
+    }
 }

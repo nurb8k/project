@@ -349,7 +349,7 @@
 
                         <div class="col-12 col-lg-12 order-2 order-md-3 order-lg-2 mb-4">
                             <div class="card">
-                                <div class="row row-bordered g-0" style="height: 500px">
+                                <div class="row row-bordered g-0">
                             {{--   yield --content       --}}
                                     @yield('web_content')
 

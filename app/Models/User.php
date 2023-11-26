@@ -55,4 +55,10 @@ class User extends Authenticatable
         'password' => 'hashed',
 //        'gender' => 'enum'
     ];
+
+
+    public function events()
+    {
+        return $this->hasMany(Event::class);
+    }
 }

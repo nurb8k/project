@@ -3,8 +3,7 @@
 
 @section('web_content')
 
-    <div class="container">
-        <div class="row">
+    <div class="container p-4">
             <div class="col-sm-6">
                 <form class="form-control" action="{{ route('events.store') }}" method="post" enctype="multipart/form-data">
                     @csrf
@@ -59,11 +58,10 @@
                     </div>
 
                     <div class="mt-2">
-                        <button class="btn-primary">Sozdat</button>
+                        <button class="btn btn-primary">Sozdat</button>
                     </div>
                 </form>
             </div>
-        </div>
     </div>
 
 @endsection
