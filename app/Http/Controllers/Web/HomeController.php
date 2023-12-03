@@ -12,7 +12,6 @@ class HomeController extends Controller
 {
     public function index()
     {
-        dd(Auth::user());
         $events = Event::query()->get();
         return view('web.index', compact('events'));
     }

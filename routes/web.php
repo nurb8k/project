@@ -21,13 +21,6 @@ Route::get('/set/locale/{lang}', function (Request $request, $lang){
         return redirect()->back();
 })->name('set.locale');
 
-Route::middleware('guest')->group(function () {
-    Route::get('/register', [RegisterController::class, 'index'])->name('register');
-    Route::post('/register', [RegisterController::class, 'store'])->name('register.post');
-});
-
-
-
 Route::get('/', [HomeController::class, 'index'])->name('home');
 
 Route::get('/events', [EventController::class, 'index'])->name('events.index');
@@ -35,3 +28,5 @@ Route::get('/events', [EventController::class, 'index'])->name('events.index');
 Route::get('/events/create', [EventController::class, 'create'])->name('events.create');
 
 Route::post('/events', [EventController::class, 'store'])->name('events.store');
+
+require __DIR__.'/auth.php';
