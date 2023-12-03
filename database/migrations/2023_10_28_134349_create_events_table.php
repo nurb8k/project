@@ -20,6 +20,7 @@ return new class extends Migration {
             $table->foreignId('priority')->default(0)->comment('приоритет айди');
             $table->foreignId('user_id')->comment('создатель')->constrained('users');
             $table->unsignedInteger('capacity')->nullable()->comment('вместимость людей');
+            $table->timestamp('start_time')->comment('начало');
             $table->timestamp('end_time')->comment('оканчание');
             $table->timestamps();
 

@@ -2,9 +2,11 @@
 
 namespace App\Enums\User;
 
-enum Gender: string
+use BenSampo\Enum\Enum;
+
+class Gender extends Enum
 {
-case Male = 'Male';
-case Female = 'Female';
-case Other = 'Other';
+const Male = 'Male';
+const Female = 'Female';
+const Other = 'Other';
 }

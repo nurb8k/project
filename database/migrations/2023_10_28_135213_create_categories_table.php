@@ -13,7 +13,8 @@ return new class extends Migration {
         Schema::create('categories', function (Blueprint $table) {
             $table->id();
             $table->json('name');
-            $table->unsignedBigInteger('parent_id');
+            $table->unsignedInteger('parent_id')->nullable();
+            $table->string('slug')->unique();
             $table->json('description')->nullable()->comment('описания категория');
             $table->foreign('parent_id')->references('id')->on('categories')
                 ->cascadeOnUpdate()

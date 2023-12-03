@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Controllers\Web;
+namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Web\Event\EventStoreRequest;
@@ -12,12 +12,16 @@ class EventController extends Controller
 {
     public function index()
     {
-        return view('web.events.index');
+        $events = Event::query()->simplePaginate();
+
+        return view('admin.events.index',
+            compact('events'))
+            ->layout('layouts.admin');
     }
 
     public function create()
     {
-        return view('web.events.create');
+        return view('admin.events.create');
     }
 
     public function store(EventStoreRequest $request)
@@ -29,12 +33,12 @@ class EventController extends Controller
 
     public function show(Event $event)
     {
-        return view('web.events.show', compact('event'));
+        return view('admin.events.show', compact('event'));
     }
 
     public function edit(Event $event)
     {
-        return view('web.events.edit', compact('event'));
+        return view('admin.events.edit', compact('event'));
     }
 
     public function update(EventStoreRequest $request, Event $event)

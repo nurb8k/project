@@ -2,13 +2,15 @@
 
 namespace App\Enums\User;
 
-enum Pronoun: string
+use BenSampo\Enum\Enum;
+
+class Pronoun extends Enum
 {
-case he_him = 'he/him';
-case she_her = 'she/her';
-case they_them = 'they/them';
-case ze_zir = 'ze/zir';
-case xe_xem = 'xe/xem';
-case ey_em = 'ey/em';
-case ve_ver = 've/ver';
+const he_him = 'he/him';
+const she_her = 'she/her';
+const they_them = 'they/them';
+const ze_zir = 'ze/zir';
+const xe_xem = 'xe/xem';
+const ey_em = 'ey/em';
+const ve_ver = 've/ver';
 }

@@ -16,19 +16,25 @@ class Event extends Model
         'title',
         'description',
         'short_description',
-        'priority_id',
+        'comment',
+        'status',
+        'priority',
         'user_id',
         'capacity',
-        'status',
+        'start_time',
+        'end_time',
     ];
 //    protected $casts = [];
     public function getStatusObject(): BelongsTo
     {
-        return $this->belongsTo(Status::class, 'status', 'model_status_id')->where('statuses.model_type', self::class);
+        return $this->belongsTo(Status::class, 'status', 'model_status_id')
+            ->where('statuses.model_type', self::class);
     }
 
-    public function author(): BelongsTo
+    public function user(): BelongsTo
     {
         return $this->belongsTo(User::class);
     }
+
+
 }

@@ -2,6 +2,7 @@
 
 namespace App\Observers;
 
+use App\Enums\User\Role;
 use App\Models\User;
 use Illuminate\Support\Facades\Hash;
 
@@ -12,8 +13,11 @@ class UserObserver
      */
     public function created(User $user): void
     {
-      // password hash
+        // password hash
         $user->password = Hash::make($user->password);
+        if (!$user->hasRole(Role::getValues())) {
+            $user->assignRole(Role::User);
+        }
     }
 
     /**

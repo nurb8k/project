@@ -1,35 +1,21 @@
 <?php
 
-use App\Http\Controllers\Auth\RegisterController;
+use App\Http\Controllers\Admin\EventController;
+use App\Http\Controllers\HomeController;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\App;
 use Illuminate\Support\Facades\Route;
-use App\Http\Controllers\Web\HomeController;
-use App\Http\Controllers\Web\EventController;
-/*
-|--------------------------------------------------------------------------
-| Web Routes
-|--------------------------------------------------------------------------
-|
-| Here is where you can register web routes for your application. These
-| routes are loaded by the RouteServiceProvider and all of them will
-| be assigned to the "web" middleware group. Make something great!
-|
-*/
+
 Route::get('/set/locale/{lang}', function (Request $request, $lang){
         $request->session()->put('localization',$lang);
         return redirect()->back();
 })->name('set.locale');
 
-Route::get('/dashboard',function (){
-    return redirect()->route('home');
+Route::get('/',function (){
+    return redirect()->route('dashbaord');
 });
-Route::get('/', [HomeController::class, 'index'])->name('home');
+Route::get('/dashboard', [HomeController::class, 'index'])->name('dashboard');
 
-Route::get('/events', [EventController::class, 'index'])->name('events.index');
-
-Route::get('/events/create', [EventController::class, 'create'])->name('events.create');
-
-Route::post('/events', [EventController::class, 'store'])->name('events.store');
-
+Route::prefix('admin')->as('admin.')->group(function () {
+    Route::resource('events', EventController::class);
+});
 require __DIR__.'/auth.php';

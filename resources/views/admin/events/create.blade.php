@@ -1,7 +1,5 @@
-
-@extends('layouts.web')
-@section('web_content')
-
+@extends('layouts.admin')
+@section('content')
     <div class="container p-4">
             <div class="col-sm-6">
                 <form class="form-control" action="{{ route('events.store') }}" method="post" enctype="multipart/form-data">
