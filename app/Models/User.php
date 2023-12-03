@@ -21,7 +21,7 @@ class User extends Authenticatable
      */
     protected $fillable = [
         'surname',
-        'name',
+        'firstname',
         'username',
         'email',
         'phone',
@@ -59,8 +59,13 @@ class User extends Authenticatable
     ];
 
 
-    public function events()
+    public function events(): \Illuminate\Database\Eloquent\Relations\HasMany
     {
         return $this->hasMany(Event::class);
+    }
+
+    public function isLoginBlocked(): bool
+    {
+        return $this->login_blocked_at !== null;
     }
 }
