@@ -21,6 +21,9 @@ Route::get('/set/locale/{lang}', function (Request $request, $lang){
         return redirect()->back();
 })->name('set.locale');
 
+Route::get('/dashboard',function (){
+    return redirect()->route('home');
+});
 Route::get('/', [HomeController::class, 'index'])->name('home');
 
 Route::get('/events', [EventController::class, 'index'])->name('events.index');
