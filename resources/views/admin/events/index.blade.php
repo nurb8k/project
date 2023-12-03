@@ -36,7 +36,7 @@
                                         </button>
                                         <div class="dropdown-menu">
                                             <a class="dropdown-item" href="{{route('admin.events.show',$event->id)}}"><i class="bx bx-show-alt me-1"></i> Show</a>
-                                            <a class="dropdown-item" href="{{route('admin.events.edit'd,$event->id)}}"><i class="bx bx-edit-alt me-1"></i>Edit</a>
+                                            <a class="dropdown-item" href="{{route('admin.events.edit',$event->id)}}"><i class="bx bx-edit-alt me-1"></i>Edit</a>
                                             <a class="dropdown-item" href="javascript:void(0);"
                                             ><i class="bx bx-trash me-1"></i> Delete</a
                                             >

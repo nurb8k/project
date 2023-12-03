@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Web\Event\EventStoreRequest;
+use App\Models\City;
 use App\Models\Event;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -21,7 +22,10 @@ class EventController extends Controller
 
     public function create()
     {
-        return view('admin.events.create');
+
+        $cities = City::query()->get();
+        return view('admin.events.create',compact('cities'))
+            ->layout('layouts.admin');
     }
 
     public function store(EventStoreRequest $request)
