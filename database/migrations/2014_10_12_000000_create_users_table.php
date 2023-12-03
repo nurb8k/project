@@ -12,19 +12,19 @@ return new class extends Migration {
     {
         Schema::create('users', function (Blueprint $table) {
             $table->id();
-            $table->string('surname');
-            $table->string('name');
+            $table->string('surname')->nullable();
+            $table->string('name')->nullable();
             $table->string('username')->unique()->nullable();
             $table->string('email')->unique()->nullable();
             $table->string('phone')->unique()->nullable();
             $table->string('password');
-            $table->enum('gender', ['Female', 'Male', 'Unknown'])->nullable();
+            $table->enum('gender', ['female', 'male', 'unknown'])->nullable();
             $table->boolean('is_online')->nullable();
             $table->string('pronouns')->nullable();
             $table->json('socials')->nullable();
             $table->text('bio')->nullable();
             $table->text('avatar')->nullable();
-            $table->timestamp('birth_date');
+            $table->timestamp('birth_date')->nullable();
             $table->timestamp('email_verified_at')->nullable();
             $table->timestamp('login_blocked_at')->nullable();
             $table->timestamp('last_seen_at')->nullable();
