@@ -31,10 +31,13 @@ class Event extends Model
             ->where('statuses.model_type', self::class);
     }
 
+    public function getStatus(): string
+    {
+        return $this->getStatusObject->name;
+    }
     public function user(): BelongsTo
     {
-        return $this->belongsTo(User::class);
+        return $this->belongsTo(User::class, 'user_id', 'id');
     }
-
 
 }

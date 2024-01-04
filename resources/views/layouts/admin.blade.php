@@ -354,8 +354,9 @@
                             <div class="card">
                                 <div class="row row-bordered g-0 p-4">
 
-                                    @yield('content')
-
+                                    <main>
+                                        {{ $slot }}
+                                    </main>
                                 </div>
                             </div>
                         </div>

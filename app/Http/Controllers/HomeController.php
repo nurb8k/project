@@ -3,13 +3,16 @@
 namespace App\Http\Controllers;
 
 
-use App\Models\Event;
 
+
+
+use App\Models\Event;
 
 class HomeController extends Controller
 {
     public function index()
     {
-        return view('client.dashboard');
+        $events  = Event::query()->get();
+        return view('client.dashboard', compact('events'));
     }
 }

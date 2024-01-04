@@ -4,6 +4,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Facades\App;
 use Spatie\Translatable\HasTranslations;
 
 class Status extends Model
@@ -45,5 +46,12 @@ class Status extends Model
 //
 //    }
 
+
+//    public function getLocaleNameAttribute(){
+//        $locale = App::getLocale();
+//            $json = $this->name;
+//            $array = json_decode($json, true);
+//            return $array[$locale];
+//        }
 
 }
