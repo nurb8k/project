@@ -181,12 +181,12 @@
                 <li class="menu-item">
                     <a href="javascript:void(0);" class="menu-link menu-toggle">
                         <i class="menu-icon tf-icons bx bx-cube-alt"></i>
-                        <div data-i18n="Misc">Misc</div>
+                        <div data-i18n="Misc">{{__('Event')}}</div>
                     </a>
                     <ul class="menu-sub">
                         <li class="menu-item">
-                            <a href="pages-misc-error.html" class="menu-link">
-                                <div data-i18n="Error">Error</div>
+                            <a href="{{route('web.events.create')}}" class="menu-link">
+                                <div data-i18n="Error">{{__("Create event")}}</div>
                             </a>
                         </li>
                         <li class="menu-item">
@@ -316,7 +316,7 @@
                                     </div>
 
                                 <li>
-                                    <div class="dropdown-divider"></div>
+                                    <div class="dropdown-dividefr"></div>
                                 </li>
                                 <li>
                                     <form action="{{route('logout')}}" method="post">

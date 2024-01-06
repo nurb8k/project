@@ -10,7 +10,7 @@
                     <div class="row mb-5">
                         @foreach($events as $event)
 
-                        <a href="{{route('client.events.show', $event)}}" class="col-md-4 col-xl-4">
+                        <a href="{{route('web.events.show', $event)}}" class="col-md-4 col-xl-4">
                             <div class="card mb-3">
                                 <img class="card-img-top" src="../assets/img/elements/18.jpg" alt="Card image cap" />
                                 <div class="card-body">

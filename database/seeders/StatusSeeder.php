@@ -15,14 +15,14 @@ class StatusSeeder extends Seeder
     {
         $event_statuses = [
             1 => [
-                1 => '{"kz":"menejer jauabyn kütude","ru":"Ответ менеджера"}',
-                2 => '{"kz":"qabyldanbady","ru":"отказано"}',
-                3 => '{"kz":"aiaqtaldy","ru":"закрыто"}',
+                1 => ['kz' => 'menejer jauabyn kütude', 'ru' => 'ожидает ответа менеджера'],
+                2 => ['kz' => 'qabyldanbady', 'ru' => 'не принято'],
+                3 => ['kz' => 'qabyldandy', 'ru' => 'принято'],
             ],
             2 => [
-                4 => '{"kz":"tırkeluge aşyq","ru":"открыто для входа"}',
-                5 => '{"kz":"tırkeluge jabyq","ru":"закрыто для входа"}',
-                6 => '{"kz":"qūpia kod arqyly","ru":"через код"}',
+                4 => ['kz' => 'tırkeluge aşyq', 'ru' => 'открыто для входа'],
+                5 => ['kz' => 'tırkeluge jabyq', 'ru' => 'закрыто для входа'],
+                6 => ['kz' => 'qūpia kod arqyly', 'ru' => 'через код'],
             ],
 
         ];
@@ -35,7 +35,7 @@ class StatusSeeder extends Seeder
                     "category" => $categoryValue,
                     "model_type" => Event::class,
                     "model_status_id" => $statusId,
-                    "name" => json_encode(json_decode($statusName))
+                    "name" => $statusName,
                 ]);
             }
         }

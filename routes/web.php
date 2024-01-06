@@ -19,23 +19,23 @@ use Illuminate\Support\Facades\Route;
 //Route::get('/', function () {
 //    return redirect(route('login'));
 //});
-Route::get('/set/locale/{lang}', function (Request $request, $lang){
-    $request->session()->put('localization',$lang);
+Route::get('/set/locale/{lang}', function (Request $request, $lang) {
+    $request->session()->put('localization', $lang);
     return redirect()->back();
 })->name('set.locale');
 
-Route::get('/',[HomeController::class, 'index'])->middleware(['auth', 'verified'])->name('dashboard');
+Route::get('/', [HomeController::class, 'index'])->middleware(['auth', 'verified'])->name('dashboard');
 
-Route::prefix('events')->name('client.')
+Route::prefix('events')->name('web.')
     ->group(function () {
 //        Route::get('/', [\App\Http\Controllers\EventController::class, 'index'])->name('events.index');
-//        Route::get('/create', [\App\Http\Controllers\EventController::class, 'create'])->name('events.create');
+        Route::get('/create', [\App\Http\Controllers\Client\Event\MainController::class, 'create'])->name('events.create');
 ////        Route::post('/', [\App\Http\Controllers\EventController::class, 'store'])->name('events.store');
         Route::get('/{event}', [\App\Http\Controllers\Client\Event\MainController::class, 'show'])->name('events.show');
 //        Route::get('/{event}/edit', [\App\Http\Controllers\EventController::class, 'edit'])->name('events.edit');
 ////        Route::put('/{event}', [\App\Http\Controllers\EventController::class, 'update'])->name('events.update');
 //        Route::delete('/{event}', [\App\Http\Controllers\EventController::class, 'destroy'])->name('events.destroy');
-});
+    });
 Route::middleware('auth')->group(function () {
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
@@ -44,5 +44,4 @@ Route::middleware('auth')->group(function () {
 });
 
 
-
-require __DIR__.'/auth.php';
+require __DIR__ . '/auth.php';

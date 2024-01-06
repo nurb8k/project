@@ -13,6 +13,6 @@ class HomeController extends Controller
     public function index()
     {
         $events  = Event::query()->get();
-        return view('client.dashboard', compact('events'));
+        return view('web.dashboard', compact('events'));
     }
 }

@@ -16,7 +16,7 @@ return new class extends Migration {
             $table->text('description')->nullable()->comment("Описание о ивенте");
             $table->text('short_description')->nullable()->comment("короткий описание о ивенте");
             $table->text('comment')->nullable()->comment('Комментарии');
-            $table->unsignedInteger('status')->default(0)->comment('status znachenie');
+            $table->unsignedInteger('status')->default(0)->comment('status значении');
             $table->foreignId('priority')->default(0)->comment('приоритет айди');
             $table->foreignId('user_id')->comment('создатель')->constrained('users');
             $table->unsignedInteger('capacity')->nullable()->comment('вместимость людей');
