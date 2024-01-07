@@ -73,7 +73,7 @@ class CategorySeeder extends Seeder
         foreach ($this->categories as $category) {
             Category::query()->create([
                 'id' => $category['id'],
-                'name' => $category['name'],
+                'name' => json_decode($category['name'], true),
                 'slug' => $category['slug'],
                 'parent_id' => $category['parent_id'],
             ]);

@@ -17,6 +17,7 @@ class DatabaseSeeder extends Seeder
             CategorySeeder::class,
             StatusSeeder::class,
             EventSeeder::class,
+            TypeSeeder::class,
 //            AdminSeeder::class,
 
         ]);

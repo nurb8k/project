@@ -8,8 +8,9 @@ use Spatie\Translatable\HasTranslations;
 
 class City extends Model
 {
-    use HasTranslations;
+    use HasFactory, HasTranslations;
 
+    protected $table = "cities";
     public array $translatable = ['name'];
     protected $fillable = ['name', 'slug'];
     protected $casts = [];

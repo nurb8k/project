@@ -49,4 +49,10 @@ class Event extends Model
         'event_types', 'event_id', 'type_id')->first();
     }
 
+    public function category(){
+        return $this->belongsToMany(
+            Category::class,
+            'events_categories', 'event_id', 'category_id')->first();
+    }
+
 }

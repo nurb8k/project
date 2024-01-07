@@ -31,5 +31,11 @@ class RolesAndPermissionsSeeder extends Seeder
 
         Role::create(['name' => \App\Enums\User\Role::User]);
 
+        $admin = \App\Models\User::factory()->create([
+            'username' => 'admin',
+            'email' => "admin@gmail.com",
+            'password' => bcrypt('password'),
+        ]);
+
     }
 }
