@@ -6,6 +6,7 @@ use App\Livewire\Forms\Web\EventForm;
 use App\Models\Category;
 use App\Models\City;
 use App\Models\Type;
+use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Collection;
 use Livewire\Component;
 
@@ -29,9 +30,12 @@ class Create extends Component
 
     public function save()
     {
-
         $this->form->store();
 //        return $this->redirect('/posts');
+    }
+    public function mount()
+    {
+        $this->form->start_time = Carbon::now()->format('Y-m-d');
     }
 
     public function render()

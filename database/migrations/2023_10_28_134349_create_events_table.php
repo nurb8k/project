@@ -18,6 +18,7 @@ return new class extends Migration {
             $table->text('comment')->nullable()->comment('Комментарии');
             $table->unsignedInteger('status')->default(0)->comment('status значении');
             $table->foreignId('priority')->default(0)->comment('приоритет айди');
+//            $table->enum('type_code', \App\Enums\Event\Type::getValues())->nullable()->comment('тип ивента');
             $table->foreignId('user_id')->comment('создатель')->constrained('users');
             $table->unsignedInteger('capacity')->nullable()->comment('вместимость людей');
             $table->timestamp('start_time')->comment('начало');

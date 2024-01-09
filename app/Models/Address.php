@@ -21,8 +21,8 @@ class Address extends Model
 //        'is_default',
 //    ];
 
-//public function addressable(): MorphTo
-//{
-//    return $this->morphTo('addressable');
-//}
+public function addressable(): \Illuminate\Database\Eloquent\Relations\MorphTo
+{
+    return $this->morphTo('addressable');
+}
 }

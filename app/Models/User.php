@@ -61,11 +61,17 @@ class User extends Authenticatable
 
     public function events(): \Illuminate\Database\Eloquent\Relations\HasMany
     {
-        return $this->hasMany(Event::class);
+        return $this->hasMany(Event::class, 'user_id', 'id');
     }
 
     public function isLoginBlocked(): bool
     {
         return $this->login_blocked_at !== null;
     }
+
+//    public function addresses(): \Illuminate\Database\Eloquent\Relations\MorphMany
+//    {
+//        return $this->morphMany(Address::class,
+//            'addressable', 'addressable_type', 'addressable_id', 'id');
+//    }
 }

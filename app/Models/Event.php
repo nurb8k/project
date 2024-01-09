@@ -41,18 +41,32 @@ class Event extends Model
     {
         return $this->belongsTo(User::class, 'user_id', 'id');
     }
-
-    public function type()
+    public function types(): BelongsToMany
     {
-    return $this->belongsToMany(
-        Type::class,
-        'event_types', 'event_id', 'type_id')->first();
+        return $this->belongsToMany(
+            Type::class,
+            'event_types', 'event_id', 'type_id');
+    }
+
+
+    public function categories(): BelongsToMany
+    {
+        return $this->belongsToMany(
+            Category::class,
+            'events_categories', 'event_id', 'category_id');
     }
 
     public function category(){
-        return $this->belongsToMany(
-            Category::class,
-            'events_categories', 'event_id', 'category_id')->first();
+        return $this->categories()->first();
+    }
+
+    public function type()
+    {
+        return $this->types()->first();
+    }
+
+    public function address(){
+        return $this->morphOne(Address::class, 'addressable', 'addressable_type', 'addressable_id');
     }
 
 }

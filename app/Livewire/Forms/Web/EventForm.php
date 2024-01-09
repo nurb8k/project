@@ -12,7 +12,7 @@ class EventForm extends Form
 //'title',//'description',//'short_description',//'comment',//'status',//'priority',
 ////'user_id',//'capacity',//'start_time',//'end_time',
     #[Validate('required|min:5')]
-    public $title = 'tt';
+    public $title = '';
 
     #[Validate('required|min:5')]
     public $description = '';
@@ -43,8 +43,28 @@ class EventForm extends Form
 
     public function store()
     {
-        dd($this->validate());
+        $this->validate();
+        $event = auth()->user()->events()->create([
+            'title' => $this->title,
+            'description' => $this->description,
+            'short_description' => $this->short_description,
+            'comment' => $this->comment,
+            'status' => $this->status,
+            'priority' => $this->priority,
+            'capacity' => $this->capacity,
+            'start_time' => $this->start_time,
+            'end_time' => $this->end_time,
+        ]);
+        $event->types()->attach($this->type_code);
+        $event->categories()->attach($this->category_id);
+        $event->address()->create([
+            'city_id' => $this->city_id,
+        ]);
+        return redirect()->route('home');
+
 //        $this->validate();
 
     }
+
+
 }

@@ -24,11 +24,14 @@ Route::get('/set/locale/{lang}', function (Request $request, $lang) {
     return redirect()->back();
 })->name('set.locale');
 
-Route::get('/', [HomeController::class, 'index'])->middleware(['auth', 'verified'])->name('dashboard');
+Route::get('/', [HomeController::class, 'index'])->middleware(['auth', 'verified'])->name('home');
 
 Route::prefix('events')->name('web.')
     ->group(function () {
 //        Route::get('/', [\App\Http\Controllers\EventController::class, 'index'])->name('events.index');
+        Route::middleware('auth')->group(function () {
+            Route::get('/create', [\App\Http\Controllers\Client\Event\MainController::class, 'create'])->name('events.create');
+        });
         Route::get('/create', [\App\Http\Controllers\Client\Event\MainController::class, 'create'])->name('events.create');
 ////        Route::post('/', [\App\Http\Controllers\EventController::class, 'store'])->name('events.store');
         Route::get('/{event}', [\App\Http\Controllers\Client\Event\MainController::class, 'show'])->name('events.show');
