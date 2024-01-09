@@ -14,6 +14,7 @@ class Create extends Component
 {
 
     public EventForm $form;
+    public $testdata ="1234essss";
     public function getCitiesProperty(): Collection|array
     {
         return City::query()->get();
@@ -27,12 +28,24 @@ class Create extends Component
     {
         return Type::query()->get();
     }
+    protected $listeners = ['addressUpdated'=>'addressUpdated'];
+
+    public function addressUpdated($placeName)
+    {
+//        dd($placeName);
+        $this->form->address = $placeName;
+    }
 
     public function save()
     {
+
+        dd($this->form->address);
         $this->form->store();
 //        return $this->redirect('/posts');
     }
+
+
+
     public function mount()
     {
         $this->form->start_time = Carbon::now()->format('Y-m-d');

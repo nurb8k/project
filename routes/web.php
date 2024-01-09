@@ -4,7 +4,7 @@ use App\Http\Controllers\HomeController;
 use App\Http\Controllers\ProfileController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
-
+use App\Livewire\Web\Event\Create;
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -31,8 +31,9 @@ Route::prefix('events')->name('web.')
 //        Route::get('/', [\App\Http\Controllers\EventController::class, 'index'])->name('events.index');
         Route::middleware('auth')->group(function () {
             Route::get('/create', [\App\Http\Controllers\Client\Event\MainController::class, 'create'])->name('events.create');
+//            Route::post('/create', Create::class)->name('livewire.events.create');
         });
-        Route::get('/create', [\App\Http\Controllers\Client\Event\MainController::class, 'create'])->name('events.create');
+//        Route::get('/create', [\App\Http\Controllers\Client\Event\MainController::class, 'create'])->name('events.create');
 ////        Route::post('/', [\App\Http\Controllers\EventController::class, 'store'])->name('events.store');
         Route::get('/{event}', [\App\Http\Controllers\Client\Event\MainController::class, 'show'])->name('events.show');
 //        Route::get('/{event}/edit', [\App\Http\Controllers\EventController::class, 'edit'])->name('events.edit');

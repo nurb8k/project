@@ -2,7 +2,7 @@
 
 namespace App\Livewire\Forms\Web;
 
-use Carbon\Carbon;
+
 use Livewire\Attributes\Validate;
 use Livewire\Form;
 
@@ -12,7 +12,7 @@ class EventForm extends Form
 //'title',//'description',//'short_description',//'comment',//'status',//'priority',
 ////'user_id',//'capacity',//'start_time',//'end_time',
     #[Validate('required|min:5')]
-    public $title = '';
+    public $title = 'ss';
 
     #[Validate('required|min:5')]
     public $description = '';
@@ -41,6 +41,8 @@ class EventForm extends Form
 
     public $city_id = 1;
 
+    #[Validate('required')]
+    public $address = '';
     public function store()
     {
         $this->validate();

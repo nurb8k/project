@@ -1,40 +1,9 @@
-<style>
-    .findLocation {
-        position: absolute;
-        margin: auto;
-        width: 15rem;
-        min-height: 3rem;
-        font-size: 1.2rem;
-        top: 0;
-        left: 0;
-        right: 0;
-        z-index: 1000;
-        background-color: var(--shadowSaturatedTransparent);
-        cursor: pointer;
-        border: none;
-        outline: none;
-        color: var(--brighterColor);
-    }
-    .findLocation:hover {
-        background-color: var(--shadowSaturated);
-    }
 
-    @media screen and (max-width: 550px) {
-        .findLocation {
-            position: absolute;
-            margin: auto;
-            width: 8rem;
-            right: 2rem;
-            min-height: 3rem;
-            font-size: 1.1rem;
-        }
-    }
-</style>
+
 <div class="container p-4">
     <div class="col-sm-12">
-        <form class="form-control" wire:submit="save" action="#" method="post" enctype="multipart/form-data">
-
-            @csrf @method('POST')
+        <form action="#" method="post" class="form-control" wire:submit="save" enctype="multipart/form-data">
+            @csrf
             <div class="row">
                 <div class="col-md-6">
                     <div class="row mt-2">
@@ -82,17 +51,17 @@
 
                     <div class="row mt-2">
 
-                        <div class="col">
-                            <label for="city">{{__('City')}}:</label>
-                            <select class="form-control" wire:model="form.city_id" name="city">
-                                @foreach($this->cities as $city)
-                                    <option disabled value="{{ $city->id }}"
-                                            @if($city->id === $form->city_id) selected @endif
-                                    >{{ $city->name }}</option>
-                                @endforeach
-                            </select>
-                            <div>@error('form.city_id') <span class="error">{{ $message }}</span> @enderror</div>
-                        </div>
+{{--                        <div class="col">--}}
+{{--                            <label for="city">{{__('City')}}:</label>--}}
+{{--                            <select class="form-control" wire:model="form.city_id" name="city">--}}
+{{--                                @foreach($this->cities as $city)--}}
+{{--                                    <option disabled value="{{ $city->id }}"--}}
+{{--                                            @if($city->id === $form->city_id) selected @endif--}}
+{{--                                    >{{ $city->name }}</option>--}}
+{{--                                @endforeach--}}
+{{--                            </select>--}}
+{{--                            <div>@error('form.city_id') <span class="error">{{ $message }}</span> @enderror</div>--}}
+{{--                        </div>--}}
 
                         <div class="col">
                             <label for="city">{{__('Type')}}:</label>
@@ -120,63 +89,110 @@
                     </div>
                 </div>
                 <div class="col-md-6">
-                <div>
-                    <div style=" position: relative; width: 100%;  height: 22rem; text-align: center;">
-                        <button *ngIf="!readonly" class="findLocation" (click)="findMyLocation()">
-                            Find My Location
-                        </button>
-                        <div  id="mapid"  style="width: 400px; height: 300px;"  class="map"></div>
-                        <div id="search-results" class="search-results"></div>
+                    <div class="row mt-2">
+                        <div class="col">
+                            <label for="title">{{__('address')}}:</label>
+                            <input id="address" class="form-control" wire:model="form.address" type="text">
+                            <div>@error('form.address') <span class="error">{{ $message }}</span> @enderror</div>
+                        </div>
                     </div>
-                </div>
+                    <div class="row mt-2">
+                        <div style=" position: relative; width: 100%;  height: 22rem; text-align: center;">
+                            <button type="button" class="findLocation" onclick="myLocation()">
+                                Find My Location
+                            </button>
+                            <div id="mapid" style="width: 400px; height: 300px;" class="map"></div>
+                        </div>
+                    </div>
                 </div>
             </div>
             <div class="mt-2">
-                <button class="btn btn-primary">{{__('Create')}}</button>
+                <button type="button" onclick="submitForm()"  class="btn btn-primary">{{__('Create')}}</button>
+                <button type="submit" id="submitButton"  class="d-none">{{__('Create')}}</button>
             </div>
         </form>
+
     </div>
 </div>
 
 <script>
+ //https://www.npmjs.com/package/leaflet-control-geocoder/v/1.8.3
+    var mymap;
+    mymap = L.map('mapid', {
+        attributionControl: false,
+    }).setView([43.25376, 76.8835584], 3.3);
+    L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+        attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
+    }).addTo(mymap);
 
-    let geolocation = [];
-    navigator.geolocation.getCurrentPosition(function(position) {
+    mymap.on('click', addMarker);
+    var newMarker = new L.marker([43.25376, 76.8835584]);
 
-        let lat = position.coords.latitude;
-        let lon = position.coords.longitude;
-        geolocation.push(lat, lon);
-    });
+    function addMarker(e) {
+        newMarker.setLatLng(e.latlng).addTo(mymap);
+        let addressLatLng = newMarker.getLatLng();
+        geocodeAddress(addressLatLng);
+    }
 
-    console.log("geolocation")
-    console.log(geolocation)
-    setTimeout(function () {
-        console.log("geolocation")
-        console.log(geolocation)
-        var mymap = L.map('mapid').setView(geolocation, 16);
-        L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
-            attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
+    function myLocation() {
+        navigator.geolocation.getCurrentPosition(function (position) {
+            let lat = position.coords.latitude;
+            let lon = position.coords.longitude;
+            mymap.setView([lat, lon], 16);
+            newMarker.setLatLng([lat, lon]).addTo(mymap);
+        });
+    }
+
+    var geocoder = L.Control.geocoder({
+        defaultMarkGeocode: false
+    }).on('markgeocode', function (e) {
+            var bbox = e.geocode.bbox;
+            var poly = L.polygon([
+                bbox.getSouthEast(),
+                bbox.getNorthEast(),
+                bbox.getNorthWest(),
+                bbox.getSouthWest()
+            ]).addTo(mymap);
+            mymap.fitBounds(poly.getBounds());
         }).addTo(mymap);
-    }, 10)
 
 
+    function geocodeAddress(latlng) {
+        if (mymap.options.crs) {
 
+            L.Control.Geocoder.nominatim(
+                {serviceUrl: 'https://nominatim.openstreetmap.org/', geocodingQueryParams: {countrycodes: 'kz'},
+                    reverseQueryParams:{countrycodes: 'kz', zoom: 18, addressdetails: 1},
+                    htmlTemplate: function (r) {
+                        console.log(r);
+                        console.log(r.address.city + ', ' + r.address.road + ', ' + r.address.house_number);
+                        return r.address.city + ', ' + r.address.road + ', ' + r.address.house_number;
+                    }
+                }
+            ).reverse(
+                latlng,
+                mymap.options.crs.scale(mymap.getZoom()),
+                (results) => {
+                    if (results && results.length > 0) {
+                        const placeName = results[0].name;
+                        console.log(placeName);
+                        document.getElementById('address').value = placeName;
+                        // Livewire.dispatchTo('web.event.create','addressUpdated', {placeName: placeName});
+                        // // console.log( Livewire.find('testdata'));
+                        // // Livewire.all()[0].ephemeral.form.address = placeName;
+                        // console.log(Livewire.all()[0]);
+                        // // Livewire.all()[0].dispatch('addressUpdated', {placeName: placeName});
+                        // // console.log(Livewire.all()[0].canonical.form);
+                    }
+                }
+            );
+        }
 
-    ////////////////////////////////////////////////////////////
-    // let geolocation = [];
-    //
-    // navigator.geolocation.getCurrentPosition(function(position) {
-    //     geolocation.push(position.coords.latitude, position.coords.longitude);
-    //     // geolocation.push();
-    //     locationCode()
-    // });
-    //
-    // function locationCode() {
-    //     if(geolocation.length <= 0)
-    //         geolocation.push(0, 0);
-    // }
-    //
-    //
-    // let map = L.map('mapid').setView(geolocation, 3);
-
+    }
+ function submitForm(){
+     let address = document.getElementById('address').value;
+     console.log(address)
+     Livewire.dispatch('addressUpdated', {placeName:address});
+     document.getElementById("submitButton").click();
+ }
 </script>
