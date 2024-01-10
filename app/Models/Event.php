@@ -45,7 +45,7 @@ class Event extends Model
     {
         return $this->belongsToMany(
             Type::class,
-            'event_types', 'event_id', 'type_id');
+            'events_types', 'event_id', 'type_id');
     }
 
 

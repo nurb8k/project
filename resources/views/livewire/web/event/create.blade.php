@@ -92,16 +92,17 @@
                     <div class="row mt-2">
                         <div class="col">
                             <label for="title">{{__('address')}}:</label>
-                            <input id="address" class="form-control" wire:model="form.address" type="text">
-                            <div>@error('form.address') <span class="error">{{ $message }}</span> @enderror</div>
+                            <input id="address" class="form-control" wire:model="form.address_info" type="text" disabled placeholder="address">
+                            <div>@error('form.address_info') <span class="error">{{ $message }}</span> @enderror</div>
                         </div>
+
                     </div>
                     <div class="row mt-2">
                         <div style=" position: relative; width: 100%;  height: 22rem; text-align: center;">
                             <button type="button" class="findLocation" onclick="myLocation()">
-                                Find My Location
+                               {{__("Find My Location")}}
                             </button>
-                            <div id="mapid" style="width: 400px; height: 300px;" class="map"></div>
+                            <div  id="mapid" style="width: 400px; height: 300px;" class="map" wire:ignore></div>
                         </div>
                     </div>
                 </div>
@@ -115,24 +116,67 @@
     </div>
 </div>
 
+
 <script>
- //https://www.npmjs.com/package/leaflet-control-geocoder/v/1.8.3
     var mymap;
+    var newMarker;
+    let addressInfos = null;
+    //https://www.npmjs.com/package/leaflet-control-geocoder/v/1.8.3
+
     mymap = L.map('mapid', {
         attributionControl: false,
     }).setView([43.25376, 76.8835584], 3.3);
-    L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
-        attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
-    }).addTo(mymap);
+    L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png',
+        {attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'}).addTo(mymap);
 
-    mymap.on('click', addMarker);
-    var newMarker = new L.marker([43.25376, 76.8835584]);
+        function addMarker(e) {
+            newMarker.setLatLng(e.latlng).addTo(mymap);
+            let addressLatLng = newMarker.getLatLng();
+            geocodeAddress(addressLatLng);
+        }
+        mymap.on('click', addMarker);
+        newMarker = new L.marker([43.25376, 76.8835584]);
+        var geocoder = L.Control.geocoder({
+            defaultMarkGeocode: false
+        }).on('markgeocode', function (e) {
+            var bbox = e.geocode.bbox;
+            var poly = L.polygon([
+                bbox.getSouthEast(),
+                bbox.getNorthEast(),
+                bbox.getNorthWest(),
+                bbox.getSouthWest()
+            ]).addTo(mymap);
+            mymap.fitBounds(poly.getBounds());
+        }).addTo(mymap);
+        function geocodeAddress(latlng) {
+            if (mymap.options.crs) {
 
-    function addMarker(e) {
-        newMarker.setLatLng(e.latlng).addTo(mymap);
-        let addressLatLng = newMarker.getLatLng();
-        geocodeAddress(addressLatLng);
-    }
+                L.Control.Geocoder.nominatim(
+                    {serviceUrl: 'https://nominatim.openstreetmap.org/', geocodingQueryParams: {countrycodes: 'kz'},
+                        reverseQueryParams:{countrycodes: 'kz', zoom: 18, addressdetails: 1},
+                        htmlTemplate: function (r) {
+                            console.log(r);
+                            addressInfos = r;
+                            // building// city// city_district// country// country_code// county// hamlet// house_number
+                            // neighbourhood// postcode// road// state// state_district// suburb
+                            console.log(r.address.city + ', ' + r.address.road + ', ' + r.address.house_number);
+                            return r.address.city + ', ' + r.address.road + ', ' + r.address.house_number;
+                        }
+                    }
+                ).reverse(
+                    latlng,
+                    mymap.options.crs.scale(mymap.getZoom()),
+                    (results) => {
+                        if (results && results.length > 0) {
+                            const placeName = results[0].name;
+                            console.log(placeName);
+                            document.getElementById('address').value = placeName;
+                        }
+                    }
+                );
+            }
+
+        }
 
     function myLocation() {
         navigator.geolocation.getCurrentPosition(function (position) {
@@ -143,56 +187,19 @@
         });
     }
 
-    var geocoder = L.Control.geocoder({
-        defaultMarkGeocode: false
-    }).on('markgeocode', function (e) {
-            var bbox = e.geocode.bbox;
-            var poly = L.polygon([
-                bbox.getSouthEast(),
-                bbox.getNorthEast(),
-                bbox.getNorthWest(),
-                bbox.getSouthWest()
-            ]).addTo(mymap);
-            mymap.fitBounds(poly.getBounds());
-        }).addTo(mymap);
-
-
-    function geocodeAddress(latlng) {
-        if (mymap.options.crs) {
-
-            L.Control.Geocoder.nominatim(
-                {serviceUrl: 'https://nominatim.openstreetmap.org/', geocodingQueryParams: {countrycodes: 'kz'},
-                    reverseQueryParams:{countrycodes: 'kz', zoom: 18, addressdetails: 1},
-                    htmlTemplate: function (r) {
-                        console.log(r);
-                        console.log(r.address.city + ', ' + r.address.road + ', ' + r.address.house_number);
-                        return r.address.city + ', ' + r.address.road + ', ' + r.address.house_number;
-                    }
-                }
-            ).reverse(
-                latlng,
-                mymap.options.crs.scale(mymap.getZoom()),
-                (results) => {
-                    if (results && results.length > 0) {
-                        const placeName = results[0].name;
-                        console.log(placeName);
-                        document.getElementById('address').value = placeName;
-                        // Livewire.dispatchTo('web.event.create','addressUpdated', {placeName: placeName});
-                        // // console.log( Livewire.find('testdata'));
-                        // // Livewire.all()[0].ephemeral.form.address = placeName;
-                        // console.log(Livewire.all()[0]);
-                        // // Livewire.all()[0].dispatch('addressUpdated', {placeName: placeName});
-                        // // console.log(Livewire.all()[0].canonical.form);
-                    }
-                }
-            );
-        }
-
-    }
  function submitForm(){
-     let address = document.getElementById('address').value;
-     console.log(address)
-     Livewire.dispatch('addressUpdated', {placeName:address});
-     document.getElementById("submitButton").click();
+            if(addressInfos == null){
+                // Livewire.dispatch('addressUpdated', {placeName: ""});
+                document.getElementById("submitButton").click();
+            }else {
+                const new_data = {
+                    ...addressInfos.address,
+                    coordinates: addressInfos.lat + ", " + addressInfos.lon,
+                    display_name: addressInfos.display_name, addresstype: addressInfos.addresstype
+                }
+                Livewire.dispatch('addressUpdated', {placeName: new_data});
+                document.getElementById("submitButton").click();
+            }
  }
 </script>
+{{--@endscript--}}

@@ -17,11 +17,17 @@ return new class extends Migration
                 ->nullable()
                 ->constrained('cities');
             $table->morphs('addressable');
-            $table->text('street')->nullable()->comment('улица');
-            $table->text('building')->nullable()->comment('здания');
-            $table->text('apartment')->nullable()->comment('дом');
-            $table->text('location')->nullable();
-            $table->text('description')->nullable();
+            $table->string('street')->nullable()->comment('улица');
+            $table->string('city_district')->nullable()->comment('район');
+            $table->string('house_number')->nullable()->comment('номер дома');
+            $table->string('amenity')->nullable()->comment('заведение');
+            $table->string('building')->nullable()->comment('здания');
+//            $table->text('apartment')->nullable()->comment('дом');
+            $table->string('suburb')->nullable()->comment('пригород|ықшам аудан');
+            $table->string('_coordinates')->nullable()->comment('координаты');
+            $table->string('_address_type')->nullable()->comment('тип адреса');
+            $table->json('_info')->nullable()->comment('полная информация');
+            $table->string('description')->nullable()->comment("display_name|для показа");
             $table->timestamps();
         });
     }

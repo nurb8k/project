@@ -14,7 +14,8 @@ class Create extends Component
 {
 
     public EventForm $form;
-    public $testdata ="1234essss";
+    public $testdata = "1234essss";
+
     public function getCitiesProperty(): Collection|array
     {
         return City::query()->get();
@@ -24,30 +25,34 @@ class Create extends Component
     {
         return Category::query()->get();
     }
+
     public function getTypesProperty(): Collection|array
     {
         return Type::query()->get();
     }
-    protected $listeners = ['addressUpdated'=>'addressUpdated'];
+
+    protected $listeners = ['addressUpdated' => 'addressUpdated'];
 
     public function addressUpdated($placeName)
     {
-//        dd($placeName);
-        $this->form->address = $placeName;
+//        if ($placeName && isset($placeName["city"]) && isset($placeName["display_name"])) {
+            $this->form->address_info = $placeName["display_name"];
+            $this->form->_address = (object)$placeName;
+//        }
     }
 
     public function save()
     {
 
-        dd($this->form->address);
         $this->form->store();
+//        $this->emit('eventCreated');
 //        return $this->redirect('/posts');
     }
 
 
-
     public function mount()
     {
+
         $this->form->start_time = Carbon::now()->format('Y-m-d');
     }
 
