@@ -14,8 +14,8 @@ class TypeSeeder extends Seeder
     {
         $types = [
 //            ["name" =>["en"=> "double", "kz"=>"жұптық" , "ru"=>"парный"], "code"=>"double"],
-            ["name" => [ "en"=> "group", "kz"=>"топтық" , "ru"=>"группавой"], "code"=>"group"],
-            ["name" =>["en"=> "team", "kz"=>"командалық" , "ru"=>"командный" ], "code"=>"team"],
+            ["name" => [ "en"=> "private", "kz"=>"приват" , "ru"=>"приватный"], "code"=>"private"],
+            ["name" =>["en"=> "team", "kz"=>"ашық" , "ru"=>"командный" ], "code"=>"team"],
 
         ];
 

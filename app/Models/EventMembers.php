@@ -11,6 +11,8 @@ class EventMembers extends Model
 
     protected $fillable = ['status',
         'event_id',
-        'user_id'];
+        'user_id',
+        'command_id',
+    ];
     protected $casts = [];
 }

@@ -11,27 +11,23 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('event_members', function (Blueprint $table) {
+        Schema::create('commands', function (Blueprint $table) {
             $table->id();
-            $table->string('status')->comment('enum');
+            $table->string('name')->comment('название команды');
+            $table->string('description')->nullable()->comment('описание команды');
+            $table->unsignedInteger('capacity')->comment('вместимость команды');
             $table->foreignId('event_id')
                 ->constrained('events')
                 ->nullOnDelete();
-            $table->foreignId('command_id')
-                ->constrained('commands')
-                ->nullOnDelete();
-            $table->foreignId('user_id')->constrained('users');
-            $table->unsignedTinyInteger('role')->default(0)->comment("роль участника");
             $table->timestamps();
         });
     }
-
 
     /**
      * Reverse the migrations.
      */
     public function down(): void
     {
-        Schema::dropIfExists('event_members');
+        Schema::dropIfExists('commands');
     }
 };

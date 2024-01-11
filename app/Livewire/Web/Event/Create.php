@@ -5,7 +5,6 @@ namespace App\Livewire\Web\Event;
 use App\Livewire\Forms\Web\EventForm;
 use App\Models\Category;
 use App\Models\City;
-use App\Models\Type;
 use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Collection;
 use Livewire\Component;
@@ -14,7 +13,6 @@ class Create extends Component
 {
 
     public EventForm $form;
-    public $testdata = "1234essss";
 
     public function getCitiesProperty(): Collection|array
     {
@@ -26,10 +24,6 @@ class Create extends Component
         return Category::query()->get();
     }
 
-    public function getTypesProperty(): Collection|array
-    {
-        return Type::query()->get();
-    }
 
     protected $listeners = ['addressUpdated' => 'addressUpdated'];
 
@@ -41,12 +35,13 @@ class Create extends Component
 //        }
     }
 
+    /**
+     * @throws \Illuminate\Validation\ValidationException
+     */
     public function save()
     {
-
         $this->form->store();
-//        $this->emit('eventCreated');
-//        return $this->redirect('/posts');
+
     }
 
 

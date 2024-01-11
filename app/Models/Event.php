@@ -6,6 +6,7 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\Relations\HasOne;
 
 class Event extends Model
@@ -25,6 +26,9 @@ class Event extends Model
         'capacity',
         'start_time',
         'end_time',
+        'is_private',
+        'is_commendable',
+        'key',
     ];
 //    protected $casts = [];
     public function getStatusObject(): BelongsTo
@@ -65,8 +69,14 @@ class Event extends Model
         return $this->types()->first();
     }
 
-    public function address(){
+    public function address()
+    {
         return $this->morphOne(Address::class, 'addressable', 'addressable_type', 'addressable_id');
+    }
+
+    public function commands() :HasMany
+    {
+        return $this->hasMany(Command::class, 'event_id', 'id');
     }
 
 }

@@ -21,6 +21,9 @@ return new class extends Migration {
 //            $table->enum('type_code', \App\Enums\Event\Type::getValues())->nullable()->comment('тип ивента');
             $table->foreignId('user_id')->comment('создатель')->constrained('users');
             $table->unsignedInteger('capacity')->nullable()->comment('вместимость людей');
+            $table->boolean('is_commendable')->default(false)->comment('является ли командой');
+            $table->boolean('is_private')->default(false)->comment('является ли приватным');
+            $table->string('key')->nullable()->comment('ключ для приватного ивента');
             $table->timestamp('start_time')->comment('начало');
             $table->timestamp('end_time')->comment('оканчание');
             $table->timestamps();
