@@ -69,6 +69,14 @@ class User extends Authenticatable
         return $this->login_blocked_at !== null;
     }
 
+    public function memberEvents(): \Illuminate\Database\Eloquent\Relations\HasManyThrough
+    {
+        return $this->hasMAnyThrough(
+            Event::class,
+            EventMembers::class,
+            'user_id', 'id', 'id', 'event_id');
+    }
+
 //    public function addresses(): \Illuminate\Database\Eloquent\Relations\MorphMany
 //    {
 //        return $this->morphMany(Address::class,

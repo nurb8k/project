@@ -83,13 +83,14 @@ class EventForm extends Form
             if ($this->capacity % $this->command_count != 0)
                 for ($i = 0; $i < $this->command_count; $i++) {
                     $divisionCapacity = $this->capacity % $this->command_count;
-                    $capacity = $this->capacity / $this->command_count;
+                    $capacity = (int)($this->capacity / $this->command_count);// parse to int
+
                 if ($divisionCapacity > 0) {
                   if($i<$divisionCapacity)
                       $capacity = $capacity + 1;
                 }
                     $event->commands()->create([
-                        'name' => 'command ' . $i,
+                        'name' => 'command ' . $i+1,
                         'capacity' => $capacity,
                     ]);
                 }

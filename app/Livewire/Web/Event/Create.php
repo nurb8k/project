@@ -47,12 +47,12 @@ class Create extends Component
 
     public function mount()
     {
-
         $this->form->start_time = Carbon::now()->format('Y-m-d');
     }
 
     public function render()
     {
+
         return view('livewire.web.event.create');
     }
 }
